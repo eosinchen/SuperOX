@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>EosinChen's Website</title>
+
+      <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">    
+
+      <!-- Font Awesone -->
+      <script src="https://kit.fontawesome.com/7a26d14113.js"></script>      
+
+      <!-- My CSS -->
+      <link href="/css/style.css" rel="stylesheet" type="text/css" media="all">
+      
+  </head>
+  <body>
+
+    <div id="app">
+
+      <div class="content bg-light">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-3">
+            
+              <div class="card">
+                <p>鳳山浸信會 超級 OX 棋</p>
+                <p>原創者：李祈成</p>
+                <p>程式設計：陳信宏</p>
+                <p>版本：0.1.5(早期測試版)
+                <hr size="8px" align="center" width="100%">
+                <div :style="{color:'red'}">目前下方符號：<font size="6">{{currSide}}</font></div>
+                <div :style="{color:'red'}">目前棋盤位置：{{currTable}}</div>
+                <div :style="{color:'red'}">選擇位置：{{pos}}</div>
+                <hr size="8px" align="center" width="100%">
+                
+                <font size="6">
+                <div><i class="fas fa-circle"></i>完成條數：</div>
+                <div><i class="far fa-circle"></i>完成條數：</div>
+                </font>
+                
+                <br>
+                <button type="button" class="btn btn-warning" @click="resetAll()">重設棋盤</button>
+              </div>
+            </div>
+        
+            <div class="col-md-6">
+              <div class="card">
+
+                <table width="600" height="600" border="5" align="center">
+              　  <tr>
+              　    <td>
+                    <table id="table_1" border="3" :bordercolor='borderLineColor(1)' align="center" :bgcolor='tableBGColor(1)'>
+                     <tr>
+                       <td class="chessGrid" @mouseover="mouseOver(1, 1)" @click="onClick(1, 1)">{{chessBoard[0][0]}}</td>
+                       <td class="chessGrid" @mouseover="mouseOver(1, 2)" @click="onClick(1, 2)">{{chessBoard[0][1]}}</td>
+                       <td class="chessGrid" @mouseover="mouseOver(1, 3)" @click="onClick(1, 3)">{{chessBoard[0][2]}}</td>
+                      </tr>
+                      <tr>
+                       <td class="chessGrid" @mouseover="mouseOver(1, 4)" @click="onClick(1, 4)">{{chessBoard[0][3]}}</td>
+                       <td class="chessGrid" @mouseover="mouseOver(1, 5)" @click="onClick(1, 5)">{{chessBoard[0][4]}}</td>
+                       <td class="chessGrid" @mouseover="mouseOver(1, 6)" @click="onClick(1, 6)">{{chessBoard[0][5]}}</td>
+                      </tr>
+                      <tr>
+                       <td class="chessGrid" @mouseover="mouseOver(1, 7)" @click="onClick(1, 7)">{{chessBoard[0][6]}}</td>
+                       <td class="chessGrid" @mouseover="mouseOver(1, 8)" @click="onClick(1, 8)">{{chessBoard[0][7]}}</td>
+                       <td class="chessGrid" @mouseover="mouseOver(1, 9)" @click="onClick(1, 9)">{{chessBoard[0][8]}}</td>
+                      </tr>
+                    </table>
+              　    </td>
+
+              　    <td>
+                     <table id="table_2" border="3" :bordercolor='borderLineColor(2)' align="center" :bgcolor='tableBGColor(2)'>
+                       <tr>
+                         <td class="chessGrid" @mouseover="mouseOver(2, 1)" @click="onClick(2, 1)">{{chessBoard[1][0]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(2, 2)" @click="onClick(2, 2)">{{chessBoard[1][1]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(2, 3)" @click="onClick(2, 3)">{{chessBoard[1][2]}}</td>
+                        </tr>
+                        <tr>
+                         <td class="chessGrid" @mouseover="mouseOver(2, 4)" @click="onClick(2, 4)">{{chessBoard[1][3]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(2, 5)" @click="onClick(2, 5)">{{chessBoard[1][4]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(2, 6)" @click="onClick(2, 6)">{{chessBoard[1][5]}}</td>
+                        </tr>
+                        <tr>
+                         <td class="chessGrid" @mouseover="mouseOver(2, 7)" @click="onClick(2, 7)">{{chessBoard[1][6]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(2, 8)" @click="onClick(2, 8)">{{chessBoard[1][7]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(2, 9)" @click="onClick(2, 9)">{{chessBoard[1][8]}}</td>
+                        </tr>
+                      </table>
+              　    </td>
+  
+              　    <td>
+                      <table id="table_3" border="3" :bordercolor='borderLineColor(3)' align="center" :bgcolor='tableBGColor(3)'>
+                       <tr>
+                         <td class="chessGrid" @mouseover="mouseOver(3, 1)" @click="onClick(3, 1)">{{chessBoard[2][0]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(3, 2)" @click="onClick(3, 2)">{{chessBoard[2][1]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(3, 3)" @click="onClick(3, 3)">{{chessBoard[2][2]}}</td>
+                        </tr>
+                        <tr>
+                         <td class="chessGrid" @mouseover="mouseOver(3, 4)" @click="onClick(3, 4)">{{chessBoard[2][3]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(3, 5)" @click="onClick(3, 5)">{{chessBoard[2][4]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(3, 6)" @click="onClick(3, 6)">{{chessBoard[2][5]}}</td>
+                        </tr>
+                        <tr>
+                         <td class="chessGrid" @mouseover="mouseOver(3, 7)" @click="onClick(3, 7)">{{chessBoard[2][6]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(3, 8)" @click="onClick(3, 8)">{{chessBoard[2][7]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(3, 9)" @click="onClick(3, 9)">{{chessBoard[2][8]}}</td>
+                        </tr>
+                      </table>
+              　    </td>
+                  </tr>
+              
+                  <tr>
+              　    <td>
+                      <table id="table_4" border="3" :bordercolor='borderLineColor(4)' align="center" :bgcolor='tableBGColor(4)'>
+                       <tr>
+                         <td class="chessGrid" @mouseover="mouseOver(4, 1)" @click="onClick(4, 1)">{{chessBoard[3][0]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(4, 2)" @click="onClick(4, 2)">{{chessBoard[3][1]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(4, 3)" @click="onClick(4, 3)">{{chessBoard[3][2]}}</td>
+                        </tr>
+                        <tr>
+                         <td class="chessGrid" @mouseover="mouseOver(4, 4)" @click="onClick(4, 4)">{{chessBoard[3][3]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(4, 5)" @click="onClick(4, 5)">{{chessBoard[3][4]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(4, 6)" @click="onClick(4, 6)">{{chessBoard[3][5]}}</td>
+                        </tr>
+                        <tr>
+                         <td class="chessGrid" @mouseover="mouseOver(4, 7)" @click="onClick(4, 7)">{{chessBoard[3][6]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(4, 8)" @click="onClick(4, 8)">{{chessBoard[3][7]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(4, 9)" @click="onClick(4, 9)">{{chessBoard[3][8]}}</td>
+                        </tr>
+                      </table>
+              　    </td>
+              
+                    <td>
+                      <table id="table_5" border="3" :bordercolor='borderLineColor(5)' align="center" :bgcolor='tableBGColor(5)'>
+                       <tr>
+                         <td class="chessGrid" @mouseover="mouseOver(5, 1)" @click="onClick(5, 1)">{{chessBoard[4][0]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(5, 2)" @click="onClick(5, 2)">{{chessBoard[4][1]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(5, 3)" @click="onClick(5, 3)">{{chessBoard[4][2]}}</td>
+                        </tr>
+                        <tr>
+                         <td class="chessGrid" @mouseover="mouseOver(5, 4)" @click="onClick(5, 4)">{{chessBoard[4][3]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(5, 5)" @click="onClick(5, 5)">{{chessBoard[4][4]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(5, 6)" @click="onClick(5, 6)">{{chessBoard[4][5]}}</td>
+                        </tr>
+                        <tr>
+                         <td class="chessGrid" @mouseover="mouseOver(5, 7)" @click="onClick(5, 7)">{{chessBoard[4][6]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(5, 8)" @click="onClick(5, 8)">{{chessBoard[4][7]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(5, 9)" @click="onClick(5, 9)">{{chessBoard[4][8]}}</td>
+                        </tr>
+                      </table>
+              　    </td>
+                   
+              　    <td>
+                     <table id="table_6" border="3" :bordercolor='borderLineColor(6)' align="center" :bgcolor='tableBGColor(6)'>
+                       <tr>
+                         <td class="chessGrid" @mouseover="mouseOver(6, 1)" @click="onClick(6, 1)">{{chessBoard[5][0]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(6, 2)" @click="onClick(6, 2)">{{chessBoard[5][1]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(6, 3)" @click="onClick(6, 3)">{{chessBoard[5][2]}}</td>
+                        </tr>
+                        <tr>
+                         <td class="chessGrid" @mouseover="mouseOver(6, 4)" @click="onClick(6, 4)">{{chessBoard[5][3]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(6, 5)" @click="onClick(6, 5)">{{chessBoard[5][4]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(6, 6)" @click="onClick(6, 6)">{{chessBoard[5][5]}}</td>
+                        </tr>
+                        <tr>
+                         <td class="chessGrid" @mouseover="mouseOver(6, 7)" @click="onClick(6, 7)">{{chessBoard[5][6]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(6, 8)" @click="onClick(6, 8)">{{chessBoard[5][7]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(6, 9)" @click="onClick(6, 9)">{{chessBoard[5][8]}}</td>
+                        </tr>
+                      </table>
+              　    </td>
+                  </tr>
+              
+                  <tr>
+              　     <td>
+                      <table id="table_7" border="3" :bordercolor='borderLineColor(7)' align="center" :bgcolor='tableBGColor(7)'>
+                        <tr>
+                          <td class="chessGrid" @mouseover="mouseOver(7, 1)" @click="onClick(7, 1)">{{chessBoard[6][0]}}</td>
+                          <td class="chessGrid" @mouseover="mouseOver(7, 2)" @click="onClick(7, 2)">{{chessBoard[6][1]}}</td>
+                          <td class="chessGrid" @mouseover="mouseOver(7, 3)" @click="onClick(7, 3)">{{chessBoard[6][2]}}</td>
+                        </tr>
+                        <tr>
+                          <td class="chessGrid" @mouseover="mouseOver(7, 4)" @click="onClick(7, 4)">{{chessBoard[6][3]}}</td>
+                          <td class="chessGrid" @mouseover="mouseOver(7, 5)" @click="onClick(7, 5)">{{chessBoard[6][4]}}</td>
+                          <td class="chessGrid" @mouseover="mouseOver(7, 6)" @click="onClick(7, 6)">{{chessBoard[6][5]}}</td>
+                        </tr>
+                        <tr>
+                          <td class="chessGrid" @mouseover="mouseOver(7, 7)" @click="onClick(7, 7)">{{chessBoard[6][6]}}</td>
+                          <td class="chessGrid" @mouseover="mouseOver(7, 8)" @click="onClick(7, 8)">{{chessBoard[6][7]}}</td>
+                          <td class="chessGrid" @mouseover="mouseOver(7, 9)" @click="onClick(7, 9)">{{chessBoard[6][8]}}</td>
+                        </tr>
+                      </table>
+              　     </td>
+              
+                    <td>
+                      <table id="table_8" border="3" :bordercolor='borderLineColor(8)' align="center" :bgcolor='tableBGColor(8)'>
+                        <tr>
+                         <td class="chessGrid" @mouseover="mouseOver(8, 1)" @click="onClick(8, 1)">{{chessBoard[7][0]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(8, 2)" @click="onClick(8, 2)">{{chessBoard[7][1]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(8, 3)" @click="onClick(8, 3)">{{chessBoard[7][2]}}</td>
+                        </tr>
+                        <tr>
+                         <td class="chessGrid" @mouseover="mouseOver(8, 4)" @click="onClick(8, 4)">{{chessBoard[7][3]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(8, 5)" @click="onClick(8, 5)">{{chessBoard[7][4]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(8, 6)" @click="onClick(8, 6)">{{chessBoard[7][5]}}</td>
+                        </tr>
+                        <tr>
+                         <td class="chessGrid" @mouseover="mouseOver(8, 7)" @click="onClick(8, 7)">{{chessBoard[7][6]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(8, 8)" @click="onClick(8, 8)">{{chessBoard[7][7]}}</td>
+                         <td class="chessGrid" @mouseover="mouseOver(8, 9)" @click="onClick(8, 9)">{{chessBoard[7][8]}}</td>
+                        </tr>
+                     </table>
+              　    </td>
+                   
+              　    <td>
+                      <table id="table_9" border="3" :bordercolor='borderLineColor(9)' align="center" :bgcolor='tableBGColor(9)'>
+                        <tr>
+                          <td class="chessGrid" @mouseover="mouseOver(9, 1)" @click="onClick(9, 1)">{{chessBoard[8][0]}}</td>
+                          <td class="chessGrid" @mouseover="mouseOver(9, 2)" @click="onClick(9, 2)">{{chessBoard[8][1]}}</td>
+                          <td class="chessGrid" @mouseover="mouseOver(9, 3)" @click="onClick(9, 3)">{{chessBoard[8][2]}}</td>
+                        </tr>
+                        <tr>
+                          <td class="chessGrid" @mouseover="mouseOver(9, 4)" @click="onClick(9, 4)">{{chessBoard[8][3]}}</td>
+                          <td class="chessGrid" @mouseover="mouseOver(9, 5)" @click="onClick(9, 5)">{{chessBoard[8][4]}}</td>
+                          <td class="chessGrid" @mouseover="mouseOver(9, 6)" @click="onClick(9, 6)">{{chessBoard[8][5]}}</td>
+                        </tr>
+                        <tr>
+                          <td class="chessGrid" @mouseover="mouseOver(9, 7)" @click="onClick(9, 7)">{{chessBoard[8][6]}}</td>
+                          <td class="chessGrid" @mouseover="mouseOver(9, 8)" @click="onClick(9, 8)">{{chessBoard[8][7]}}</td>
+                          <td class="chessGrid" @mouseover="mouseOver(9, 9)" @click="onClick(9, 9)">{{chessBoard[8][8]}}</td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <!-- Vue Lib-->
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
+    <!-- SuperXO Chess-->
+    <script type="text/javascript" src="js/main.js"></script>
+
+  </body>
+</html>
